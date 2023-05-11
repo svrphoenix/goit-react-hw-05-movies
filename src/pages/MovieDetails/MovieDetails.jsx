@@ -10,7 +10,7 @@ const MovieDetails = () => {
   const backLinkRef = useRef(useLocation().state?.from ?? '/'); //з рефом і без рефа спробувати
 
   const [movie, setMovie] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); //додати відстеження завантаження
+  // const [isLoading, setIsLoading] = useState(true); //додати відстеження завантаження
 
   useEffect(() => {
     const controller = new AbortController();
