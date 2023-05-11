@@ -1,0 +1,64 @@
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // доступ до параметрів поточного URL
+import * as TMDBApiService from 'service/tmdb-api-service';
+import {
+  Author,
+  NoReviews,
+  Review,
+  Header,
+  List,
+  Item,
+  Container,
+} from './Reviews.styled';
+
+const Reviews = () => {
+  const { movieId } = useParams();
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchReviews = async () => {
+      const additionalUrl = `/movie/${movieId}/reviews`;
+
+      try {
+        const data = await TMDBApiService.fetchMovies(
+          additionalUrl,
+          controller
+        );
+        console.log(data);
+        setReviews(data);
+      } catch (error) {
+        if (error.code !== 'ERR_CANCELED') alert(error.message);
+        console.log(error);
+      }
+    };
+
+    fetchReviews();
+    return () => {
+      controller.abort();
+    };
+  }, [movieId]);
+
+  return (
+    <Container>
+      <Header>Reviews</Header>
+
+      {reviews.length ? (
+        <List className="reviews-container">
+          {reviews.map(review => (
+            <Item className="review-card" key={review.id}>
+              <Author>Author: {review.author}</Author>
+              <Review>{review.content}</Review>
+            </Item>
+          ))}
+        </List>
+      ) : (
+        <NoReviews>
+          We don't have any reviews for this movie yet.
+        </NoReviews>
+      )}
+    </Container>
+  );
+};
+export default Reviews;
