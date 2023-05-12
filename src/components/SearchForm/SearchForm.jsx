@@ -1,33 +1,46 @@
 import PropTypes from 'prop-types';
-// import { toast } from 'react-hot-toast'; // додаємо бібліотеку для сповіщень
-import { Button, Form, Input } from './SearchForm.styled'; // додаємо стилі
+import { toast } from 'react-hot-toast';
+import { Button, Form, Input, Icon } from './SearchForm.styled';
+import { useState } from 'react';
 
-// додаємо функціонал для пошуку фільмів
 const SearchForm = ({ onSubmit }) => {
-  const handleSubmit = e => {
-    e.preventDefault(); // відміняємо стандартну поведінку браузера
+  const [query, setQuery] = useState('');
 
-    const query = e.target.elements.query.value; // додаємо доступ до значення поля пошуку
+  const handleInput = evt => {
+    setQuery(evt.currentTarget.value);
+  };
 
-    // додаємо перевірку на наявність значення в полі пошуку
+  const handleSubmit = evt => {
+    evt.preventDefault();
+    setQuery(query.toLowerCase().trim());
     if (!query) {
-      alert('Please enter something');
+      toast('Please enter movie name');
       return;
     }
 
-    onSubmit(query); // додаємо функціонал для пошуку фільмів
-    e.target.reset(); // очищаємо поле пошуку
+    onSubmit(query);
+    setQuery('');
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Input name="query" type="text" placeholder="Search movies" />
-      <Button type="submit">Search</Button>
+      <Input
+        name="search"
+        type="text"
+        value={query}
+        placeholder="Search movies"
+        required
+        autoFocus
+        autoComplete="off"
+        onChange={handleInput}
+      />
+      <Button type="submit">
+        <Icon />
+      </Button>
     </Form>
   );
 };
 
-// додаємо перевірку на типи пропсів
 SearchForm.propTypes = { onSubmit: PropTypes.func.isRequired };
 
 export default SearchForm;

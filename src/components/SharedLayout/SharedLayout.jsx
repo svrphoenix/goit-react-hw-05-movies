@@ -1,5 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { StyledLink, Header, List } from './SharedLayout.styled';
+import { Loader } from 'components/Loader/Loader';
+import { Suspense } from 'react';
 
 const SharedLayout = () => {
   return (
@@ -16,8 +18,10 @@ const SharedLayout = () => {
           </List>
         </nav>
       </Header>
-      <main>
-        <Outlet />
+      <main style={{ display: 'flex', flexDirection: 'column' }}>
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
       </main>
     </>
   );

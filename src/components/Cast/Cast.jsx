@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast, Toaster } from 'react-hot-toast';
+
 import * as TMDBApiService from 'service/tmdb-api-service';
+
 import {
   Header,
   Info,
@@ -17,7 +20,12 @@ const Cast = () => {
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
+    if (!movieId) {
+      return;
+    }
+
     const controller = new AbortController();
+
     const fetchCast = async () => {
       const additionalUrl = `/movie/${movieId}/credits`;
 
@@ -26,11 +34,12 @@ const Cast = () => {
           additionalUrl,
           controller
         );
-        console.log(data);
         setCast(data.cast);
       } catch (error) {
-        if (error.code !== 'ERR_CANCELED') alert(error.message);
-        console.log(error);
+        if (error.code !== 'ERR_CANCELED') {
+          toast.error('Error happened on server. Please, reload webpage.');
+        }
+        setCast([]);
       }
     };
 
@@ -43,7 +52,6 @@ const Cast = () => {
   return (
     <Container>
       <Header>Cast</Header>
-
       {cast.length ? (
         <List>
           {cast.map(actor => (
@@ -55,7 +63,7 @@ const Cast = () => {
                 />
               ) : (
                 <ActorImage
-                  src={`https://via.placeholder.com/200x300?text=No+Image`}
+                  src={`https://via.placeholder.com/200x300?text=No+Photo`}
                   alt={`${actor.name} profile`}
                 />
               )}
@@ -68,10 +76,9 @@ const Cast = () => {
           ))}
         </List>
       ) : (
-        <NoCast>
-          We don't have any information about the cast yet.
-        </NoCast>
+        <NoCast>We don't have any information about the cast.</NoCast>
       )}
+      <Toaster position="top-right" reverseOrder={false} />
     </Container>
   );
 };

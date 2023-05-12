@@ -1,14 +1,16 @@
-import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import { List } from './Gallery.styled';
+import { StyledLink } from './Gallery.styled';
 
 const Gallery = ({ movies, location }) => {
   return (
     <List>
       {movies.map(({ id, title }) => (
         <li key={id}>
-          <NavLink to={`/movies/${id}`} state={{ from: location }}>
+          <StyledLink to={`/movies/${id}`} state={{ from: location }}>
             {title}
-          </NavLink>
+          </StyledLink>
         </li>
       ))}
     </List>
@@ -16,3 +18,11 @@ const Gallery = ({ movies, location }) => {
 };
 
 export default Gallery;
+
+Gallery.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }).isRequired
+  ).isRequired,
+};

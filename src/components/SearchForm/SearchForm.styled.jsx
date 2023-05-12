@@ -1,33 +1,51 @@
 import styled from 'styled-components';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 export const Form = styled.form`
+  margin: 0 auto;
+  position: relative;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-`;
-
-export const Input = styled.input`
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  margin-right: 15px;
-  font-size: 16px;
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  border-radius: 3px;
+  overflow: hidden;
 `;
 
 export const Button = styled.button`
-  background-color: #b5d1f2;
-  border: 1px solid #0d57aa;
-  border-radius: 4px;
-  padding: 8px 18px;
-  font-size: 16px;
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  opacity: 0.6;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-
-  &:hover,
-  &:focus {
-    background-color: #0d57aa;
-    color: #ffffff;
+  outline: none;
+  &:hover {
+    opacity: 1;
   }
+`;
+
+export const Input = styled.input`
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+
+  font: inherit;
+  font-size: 18px;
+  border-style: none;
+  
+  outline: none;
+  padding: 0 4px;
+  &::placeholder {
+    font: inherit;
+    font-size: 18px;
+  }
+`;
+
+export const Icon = styled(AiOutlineSearch)`
+  width: 20px;
+  height: 20px;
 `;

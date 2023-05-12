@@ -1,16 +1,13 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin-top: 30px;
-  padding-right: 40px;
-  padding-left: 40px;
-  padding-bottom: 40px;
+  margin: 0 auto;
 `;
 
 export const Header = styled.h3`
-  font-size: 32px;
+  text-align: center;
+  font-size: 24px;
   font-weight: 700;
-  color: gray;
   margin-bottom: 20px;
 `;
 
@@ -22,11 +19,11 @@ export const List = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0 auto;
-  margin-bottom: 30px; //cdcvfvgf
+  margin-bottom: 30px;
 `;
 
 export const Item = styled.li`
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   border-bottom: 1px solid #d3d3d3;
 `;
 
@@ -38,6 +35,8 @@ export const Author = styled.h4`
 
 export const Review = styled.p`
   line-height: 1.3;
+  text-align: justify;
+  text-indent: 2em;
 `;
 
 export const NoReviews = styled.p`

@@ -1,22 +1,31 @@
-import { useParams, useLocation, Outlet, NavLink } from 'react-router-dom';
+import { useParams, useLocation, Outlet } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import { StyledLink } from 'components/SharedLayout/SharedLayout.styled';
+import { Toaster, toast } from 'react-hot-toast';
+import { Suspense } from 'react';
+
 import * as TMDBApiService from 'service/tmdb-api-service';
+
 import GalleryItem from 'components/GalleryItem/GalleryItem';
 import { Layout } from 'components/Layout/Layout';
+import { Button } from 'components/Button/Button.styled';
+import { Section } from 'components/Section/Section.styled';
+import { Line, ButtonContainer } from './MovieDetails.styled';
+import { Loader } from 'components/Loader/Loader';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
-  const backLinkRef = useRef(useLocation().state?.from ?? '/'); //з рефом і без рефа спробувати
+  const backLinkRef = useRef(useLocation().state?.from ?? '/'); 
 
-  const [movie, setMovie] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true); //додати відстеження завантаження
+  const [movie, setMovie] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController();
     if (!movieId) {
       return;
     }
+
+    const controller = new AbortController();
+    setIsLoading(true);
 
     const getMovieDetails = async movieId => {
       const additionalUrl = `/movie/${movieId}`;
@@ -25,14 +34,17 @@ const MovieDetails = () => {
           additionalUrl,
           controller
         );
-        console.log(`Інформація про ${movieId}`, data);
         setMovie(data);
       } catch (error) {
-        if (error.code !== 'ERR_CANCELED') alert(error.message);
-        setMovie([]);
-        console.log(error.message);
+        if (error.code !== 'ERR_CANCELED') {
+          toast.error('Error happened on server. Please, reload webpage.');
+        }
+        setMovie(null);
+      } finally {
+        setIsLoading(false);
       }
     };
+
     getMovieDetails(movieId);
 
     return () => {
@@ -41,19 +53,28 @@ const MovieDetails = () => {
   }, [movieId]);
 
   return (
-    <Layout>
-      <StyledLink
-        style={{ color: 'red', backgroundColor: 'black' }}
-        to={backLinkRef.current}
-      >
-        Go back
-      </StyledLink>
-      <GalleryItem movie={movie} />
-      <h3>Additional information</h3>
-      <NavLink to="cast">Cast</NavLink>
-      <NavLink to="reviews">Reviews</NavLink>
-      <Outlet />
-    </Layout>
+    <Section>
+      <Layout>
+        <Button to={backLinkRef.current}>Go back</Button>
+        {isLoading && <Loader />}
+        <GalleryItem movie={movie} />
+        {movie && (
+          <>
+            <Line />
+            <h3>Additional information</h3>
+            <ButtonContainer>
+              <Button to="cast">Cast</Button>
+              <Button to="reviews">Reviews</Button>
+            </ButtonContainer>
+          </>
+        )}
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
+
+        <Toaster position="top-right" reverseOrder={false} />
+      </Layout>
+    </Section>
   );
 };
 

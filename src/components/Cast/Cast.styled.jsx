@@ -2,16 +2,15 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   margin: 0 auto;
-  padding-right: 80px;
-  padding-left: 80px;
+  padding-right: 40px;
+  padding-left: 84px;
   padding-bottom: 40px;
-  text-align: center;
 `;
 
 export const Header = styled.h3`
-  font-size: 32px;
+  text-align: center;
+  font-size: 24px;
   font-weight: 700;
-  color: gray;
   margin-bottom: 20px;
 `;
 

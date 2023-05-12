@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Toaster, toast } from 'react-hot-toast';
+
 import * as TMDBApiService from 'service/tmdb-api-service';
 
 import Gallery from 'components/Gallery/Gallery';
 import { Layout } from 'components/Layout/Layout';
-import { Section } from './Home.styled';
+import { Section } from 'components/Section/Section.styled';
+import { Loader } from 'components/Loader/Loader';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
-  console.log(location);
 
   useEffect(() => {
     const controller = new AbortController();
+    setIsLoading(true);
 
-    const getTradingMovies = async () => {
+    const getTrendingMovies = async () => {
       const additionalUrl = '/trending/movie/day';
       try {
         const data = await TMDBApiService.fetchMovies(
@@ -23,24 +27,38 @@ const Home = () => {
         );
         setMovies(data.results);
       } catch (error) {
-        if (error.message !== 'canceled') alert(error.message);
-        console.log(error.message);
+        if (error.code !== 'ERR_CANCELED') {
+          toast.error('Error happened on server. Please, reload webpage.');
+        }
+        setMovies([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    getTradingMovies();
+    getTrendingMovies();
 
     return () => {
       controller.abort();
     };
   }, []);
-  // const movies = [...data];
+
   return (
     <Section>
       <Layout>
-        <h2>Trending today</h2>
-        {/* <Gallery movies={movies} /> */}
-        <Gallery movies={movies} location={location} />
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <h2>Trending today</h2>
+            {movies.length > 0 ? (
+              <Gallery movies={movies} location={location} />
+            ) : (
+              <p>There are no movies trending...</p>
+            )}
+          </>
+        )}
+        <Toaster position="top-right" reverseOrder={false} />
       </Layout>
     </Section>
   );

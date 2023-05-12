@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // доступ до параметрів поточного URL
+import { useParams } from 'react-router-dom';
+import { toast, Toaster } from 'react-hot-toast';
+
 import * as TMDBApiService from 'service/tmdb-api-service';
+
 import {
   Author,
   NoReviews,
@@ -16,6 +19,10 @@ const Reviews = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
+    if (!movieId) {
+      return;
+    }
+
     const controller = new AbortController();
 
     const fetchReviews = async () => {
@@ -26,12 +33,13 @@ const Reviews = () => {
           additionalUrl,
           controller
         );
-        console.log(data);
-        setReviews(data);
+        setReviews(data.results);
       } catch (error) {
-        if (error.code !== 'ERR_CANCELED') alert(error.message);
-        console.log(error);
-      }
+        if (error.code !== 'ERR_CANCELED') {
+          toast.error('Error happened on server. Please, reload webpage.');
+        }
+        setReviews([]);
+      } 
     };
 
     fetchReviews();
@@ -43,21 +51,19 @@ const Reviews = () => {
   return (
     <Container>
       <Header>Reviews</Header>
-
       {reviews.length ? (
         <List className="reviews-container">
           {reviews.map(review => (
-            <Item className="review-card" key={review.id}>
+            <Item key={review.id}>
               <Author>Author: {review.author}</Author>
               <Review>{review.content}</Review>
             </Item>
           ))}
         </List>
       ) : (
-        <NoReviews>
-          We don't have any reviews for this movie yet.
-        </NoReviews>
+        <NoReviews>We don't have any reviews for this movie yet.</NoReviews>
       )}
+      <Toaster position="top-right" reverseOrder={false} />
     </Container>
   );
 };
