@@ -13,7 +13,7 @@ const Home = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
-
+  
   useEffect(() => {
     const controller = new AbortController();
     setIsLoading(true);

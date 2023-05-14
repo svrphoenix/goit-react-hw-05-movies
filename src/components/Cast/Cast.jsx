@@ -67,7 +67,6 @@ const Cast = () => {
                   alt={`${actor.name} profile`}
                 />
               )}
-
               <Info>
                 <ActorName>{actor.name}</ActorName>
                 <p>Character: {actor.character}</p>

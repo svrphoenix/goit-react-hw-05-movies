@@ -14,8 +14,7 @@ import { Loader } from 'components/Loader/Loader';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
-  const backLinkRef = useRef(useLocation().state?.from ?? '/'); 
-
+  const backLinkRef = useRef(useLocation().state?.from ?? '/');
   const [movie, setMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 

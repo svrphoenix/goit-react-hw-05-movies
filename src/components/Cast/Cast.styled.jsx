@@ -30,7 +30,6 @@ export const Item = styled.li`
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   width: 220px;
   background-color: #fff;
@@ -46,6 +45,7 @@ export const Item = styled.li`
 
 export const Info = styled.div`
   font-size: 20px;
+  padding: 12px 4px;
   font-weight: 400;
   margin-top: 20px;
   max-width: 220px;
