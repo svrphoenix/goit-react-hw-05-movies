@@ -23,6 +23,7 @@ export const List = styled.ul`
 `;
 
 export const Item = styled.li`
+  width: 100%;
   padding-bottom: 20px;
   border-bottom: 1px solid #d3d3d3;
 `;

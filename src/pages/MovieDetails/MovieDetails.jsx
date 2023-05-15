@@ -1,6 +1,6 @@
 import { useParams, useLocation, Outlet } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { Suspense } from 'react';
 
 import * as TMDBApiService from 'service/tmdb-api-service';
@@ -70,8 +70,6 @@ const MovieDetails = () => {
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
-
-        <Toaster position="top-right" reverseOrder={false} />
       </Layout>
     </Section>
   );

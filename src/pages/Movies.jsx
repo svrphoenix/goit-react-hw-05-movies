@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import * as TMDBApiService from 'service/tmdb-api-service';
 
@@ -60,7 +60,6 @@ const Movies = () => {
         <SearchForm onSubmit={handleSubmit} />
         {isLoading && <Loader />}
         <Gallery movies={movies} location={location} />
-        <Toaster position="top-right" reverseOrder={false} />
       </Layout>
     </Section>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import * as TMDBApiService from 'service/tmdb-api-service';
 
@@ -13,7 +13,7 @@ const Home = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
-  
+
   useEffect(() => {
     const controller = new AbortController();
     setIsLoading(true);
@@ -58,7 +58,6 @@ const Home = () => {
             )}
           </>
         )}
-        <Toaster position="top-right" reverseOrder={false} />
       </Layout>
     </Section>
   );

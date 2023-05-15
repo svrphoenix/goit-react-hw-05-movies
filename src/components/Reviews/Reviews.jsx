@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import * as TMDBApiService from 'service/tmdb-api-service';
 
@@ -39,7 +39,7 @@ const Reviews = () => {
           toast.error('Error happened on server. Please, reload webpage.');
         }
         setReviews([]);
-      } 
+      }
     };
 
     fetchReviews();
@@ -63,7 +63,6 @@ const Reviews = () => {
       ) : (
         <NoReviews>We don't have any reviews for this movie yet.</NoReviews>
       )}
-      <Toaster position="top-right" reverseOrder={false} />
     </Container>
   );
 };

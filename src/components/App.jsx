@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import { GlobalStyle } from './GlobalStyle';
 import { lazy } from 'react';
 
 import Home from 'pages/Home/Home';
@@ -14,19 +13,16 @@ const MovieDetails = lazy(() => import('pages/MovieDetails/MovieDetails'));
 
 export const App = () => {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route index element={<Home />} />
-          <Route path="movies" element={<Movies />} />
-          <Route path="movies/:movieId" element={<MovieDetails />}>
-            <Route path="reviews" element={<Reviews />} />
-            <Route path="cast" element={<Cast />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route index element={<Home />} />
+        <Route path="movies" element={<Movies />} />
+        <Route path="movies/:movieId" element={<MovieDetails />}>
+          <Route path="reviews" element={<Reviews />} />
+          <Route path="cast" element={<Cast />} />
         </Route>
-      </Routes>
-      <GlobalStyle />
-    </>
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 };

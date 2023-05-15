@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import * as TMDBApiService from 'service/tmdb-api-service';
 
@@ -77,7 +77,6 @@ const Cast = () => {
       ) : (
         <NoCast>We don't have any information about the cast.</NoCast>
       )}
-      <Toaster position="top-right" reverseOrder={false} />
     </Container>
   );
 };

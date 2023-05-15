@@ -1,28 +1,34 @@
 import { Outlet } from 'react-router-dom';
-import { StyledLink, Header, List } from './SharedLayout.styled';
-import { Loader } from 'components/Loader/Loader';
 import { Suspense } from 'react';
+
+import { Toaster } from 'react-hot-toast';
+
+import { GlobalStyle } from 'components/GlobalStyle';
+import { StyledLink, Header, Menu, Main } from './SharedLayout.styled';
+import { Loader } from 'components/Loader/Loader';
 
 const SharedLayout = () => {
   return (
     <>
       <Header>
         <nav>
-          <List>
+          <Menu>
             <li>
               <StyledLink to="/">Home</StyledLink>
             </li>
             <li>
               <StyledLink to="/movies">Movies</StyledLink>
             </li>
-          </List>
+          </Menu>
         </nav>
       </Header>
-      <main style={{ display: 'flex', flexDirection: 'column' }}>
+      <Main>
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
-      </main>
+      </Main>
+      <GlobalStyle />
+      <Toaster position="top-right" reverseOrder={false} />
     </>
   );
 };

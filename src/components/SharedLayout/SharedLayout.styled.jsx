@@ -6,7 +6,12 @@ export const Header = styled.header`
   border: 1px solid white;
 `;
 
-export const List = styled.ul`
+export const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Menu = styled.ul`
   padding: 32px;
   margin-left: auto;
   gap: 40px;
